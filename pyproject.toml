@@ -1,0 +1,17 @@
+[project]
+name = "test-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "langchain-community>=0.4.1",
+    "langchain-openai>=1.1.0",
+    "python-dotenv>=1.0.1",
+    "ruff>=0.14.7",
+]
+
+[tool.uv.workspace]
+members = [
+    "example",
+]
