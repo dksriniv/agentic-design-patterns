@@ -24,3 +24,26 @@ This project shows a simple LangChain pipeline that:
    python3 example.py
    python3 example.py --text "Custom spec text" --temperature 0.2
    ```
+
+# Router Pattern Demo
+
+This example shows a coordinator router that decides which specialist handler should process a request (booking, info, or unclear).
+
+## How it works
+- Router: `build_router_chain` uses a prompt plus `ChatOpenAI` to output `booker`, `info`, or `unclear`.
+- Delegation: `build_delegation_branch` dispatches to `booking_handler`, `info_handler`, or `unclear_handler` via `RunnableBranch`.
+- Environment: `load_environment` loads `.env` when available; `ensure_api_key` validates `OPENAI_API_KEY` before building the LLM.
+- CLI: `python3 router_pattern.py` invokes the coordinator on a few demo requests and prints the results.
+
+## Setup
+1) Add your key to `.env` (already gitignored):
+   ```
+   OPENAI_API_KEY=sk-...
+   ```
+2) Install deps (uv or pip):
+   - `uv sync` (preferred)  
+   - or `pip install -e .`
+3) Run:
+   ```
+   python3 router_pattern.py
+   ```
