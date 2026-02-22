@@ -95,3 +95,37 @@ This example uses LangGraph to classify support messages and route them to FAQ, 
    ```
    python3 langgraph_example.py
    ```
+
+# LangGraph RAG Support Demo
+
+This example blends LangGraph routing with a small RAG pipeline to ground FAQ answers before replying.
+
+## How it works
+- Classifier: `build_classifier_chain` labels each message as `faq`, `escalate`, or `fallback`.
+- Retrieval: `build_retriever` embeds a short FAQ corpus with `OpenAIEmbeddings` and selects the top matches via cosine similarity.
+- Routing: `build_graph` wires classify → conditional routing → FAQ/escalate/fallback nodes and termination edges.
+- Responses: `answer_faq` pulls retrieved context into the FAQ prompt; `escalate_ticket` and `fallback` handle sensitive or unclear cases.
+- Environment: `load_environment` loads `.env` when available; `ensure_api_key` validates `OPENAI_API_KEY` before building the LLM.
+- CLI: `python3 langgraph_rag_example.py` runs three demo messages, printing intent, reply, and retrieved sources.
+
+## Key functions
+- `load_environment` / `ensure_api_key`: load env vars and enforce `OPENAI_API_KEY` is set.
+- `build_llm`: constructs the `ChatOpenAI` client with optional temperature.
+- `build_classifier_chain`: prompt+LLM+parser that emits `faq`/`escalate`/`fallback`.
+- `build_retriever`: creates a simple embedding-backed retriever plus cosine similarity helper.
+- `build_faq_chain`: prompt+LLM+parser that returns concise FAQ answers grounded in context.
+- `build_graph`: assembles the LangGraph with classify → RAG FAQ/escalate/fallback nodes and termination edges.
+- `main`: runs the compiled graph against demo messages and logs intent, reply, and sources.
+
+## Setup
+1) Add your key to `.env` (already gitignored):
+   ```
+   OPENAI_API_KEY=sk-...
+   ```
+2) Install deps (uv or pip):
+   - `uv sync` (preferred)  
+   - or `pip install -e .`
+3) Run:
+   ```
+   python3 langgraph_rag_example.py
+   ```
