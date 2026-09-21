@@ -1,0 +1,5 @@
+[
+  {"id": "access-overview", "title": "Account access recovery", "text": "Recovery depends on whether you forgot your password or lost your two-factor phone. Identify which issue applies before choosing a procedure."},
+  {"id": "password-reset", "title": "Forgotten password", "text": "Select Forgot Password on the login page and follow the reset link sent to your registered email address."},
+  {"id": "lost-phone", "title": "Lost phone and two-factor recovery", "text": "Use a saved recovery code to sign in, then register your replacement authenticator in Security settings. If you have no recovery codes, contact the support team for identity verification. Never share passwords or recovery codes in this chat."}
+]
